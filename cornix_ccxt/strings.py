@@ -1,0 +1,8 @@
+BINGX_FUTURES = 'BingX Futures'
+BINGX_SPOT = 'BingX Spot'
+BITGET_FUTURES = 'Bitget Futures'
+BITGET_INVERSE = 'Bitget Inverse'
+BITGET_SPOT = 'Bitget Spot'
+COINBASE_ADVANCED_SPOT = 'Coinbase Advanced Spot'
+HYPERLIQUID_FUTURES = 'HyperLiquid Futures'
+HYPERLIQUID_SPOT = 'HyperLiquid Spot'
