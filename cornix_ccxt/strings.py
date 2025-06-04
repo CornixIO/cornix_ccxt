@@ -24,3 +24,5 @@ KUCOIN_FUTURES = 'KuCoin Futures'
 OKX = 'OKX'
 OKX_FUTURES = 'OKX Futures'
 OKX_INVERSE = 'OKX Inverse'
+
+MARKET_DELIMITER = '/'
