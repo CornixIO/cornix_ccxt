@@ -25,7 +25,7 @@ from ccxt.base.errors import RateLimitExceeded
 from ccxt.base.errors import ExchangeNotAvailable
 from ccxt.base.errors import InvalidNonce
 from ccxt.base.errors import AuthenticationError
-from ccxt.base.precise import Precise
+from cornix_ccxt.base.precise import Precise
 
 
 class kucoin(Exchange, ImplicitAPI):

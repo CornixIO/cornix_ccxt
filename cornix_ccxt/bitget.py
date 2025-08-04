@@ -31,7 +31,7 @@ from ccxt.base.errors import InvalidNonce
 from ccxt.base.errors import RequestTimeout
 from ccxt.base.errors import AuthenticationError
 from ccxt.base.decimal_to_precision import TICK_SIZE
-from ccxt.base.precise import Precise
+from cornix_ccxt.base.precise import Precise
 
 
 class bitget(Exchange, ImplicitAPI):

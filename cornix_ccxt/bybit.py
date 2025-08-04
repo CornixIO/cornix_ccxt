@@ -30,7 +30,7 @@ from ccxt.base.errors import RequestTimeout
 from ccxt.base.errors import AuthenticationError
 from cornix_ccxt.errors import NotChanged
 from ccxt.base.decimal_to_precision import TICK_SIZE
-from ccxt.base.precise import Precise
+from cornix_ccxt.base.precise import Precise
 
 DEFAULT_LIMIT = 50
 SEVEN_DAYS_SECONDS = 60 * 60 * 24 * 7

@@ -25,7 +25,7 @@ from ccxt.base.errors import RateLimitExceeded
 from ccxt.base.decimal_to_precision import decimal_to_precision
 from ccxt.base.decimal_to_precision import DECIMAL_PLACES, TRUNCATE, ROUND, ROUND_UP, ROUND_DOWN, NO_PADDING
 from ccxt.base.decimal_to_precision import number_to_string
-from ccxt.base.precise import Precise
+from cornix_ccxt.base.precise import Precise
 
 # -----------------------------------------------------------------------------
 
