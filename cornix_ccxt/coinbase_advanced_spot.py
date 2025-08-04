@@ -1,4 +1,4 @@
-from ccxt.coinbase import coinbase
+from cornix_ccxt.coinbase import coinbase
 
 
 class coinbase_advanced_spot(coinbase):

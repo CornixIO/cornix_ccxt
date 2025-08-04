@@ -5,7 +5,7 @@
 from collections import defaultdict
 from uuid import uuid4
 
-from ccxt.base.exchange import Exchange
+from cornix_ccxt.base.exchange import Exchange
 import math
 import json
 from ccxt.base.errors import ExchangeError

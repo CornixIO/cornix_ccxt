@@ -5,7 +5,7 @@
 
 from __future__ import annotations
 from datetime import datetime
-from ccxt.base.exchange import Exchange
+from cornix_ccxt.base.exchange import Exchange
 from ccxt.abstract.bitget import ImplicitAPI
 import hashlib
 import json

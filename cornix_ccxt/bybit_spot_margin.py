@@ -1,4 +1,4 @@
-from ccxt.bybit import bybit
+from cornix_ccxt.bybit import bybit
 
 
 class bybit_spot_margin(bybit):
