@@ -13,7 +13,8 @@ from ccxt.base.types import OrderSide
 from ccxt.base.types import OrderType
 from typing import Optional
 from typing import List
-from ccxt.base.errors import ExchangeError, NotChanged, OrderCancelled, PositionNotFound, \
+from ccxt.base.errors import ExchangeError
+from cornix_ccxt.errors import NotChanged, OrderCancelled, PositionNotFound, \
     AccountRateLimitExceeded, MaxStopAllowed
 from ccxt.base.errors import PermissionDenied
 from ccxt.base.errors import ArgumentsRequired
@@ -27,7 +28,7 @@ from ccxt.base.errors import RateLimitExceeded
 from ccxt.base.errors import InvalidNonce
 from ccxt.base.errors import RequestTimeout
 from ccxt.base.errors import AuthenticationError
-from ccxt.base.errors import NotChanged
+from cornix_ccxt.errors import NotChanged
 from ccxt.base.decimal_to_precision import TICK_SIZE
 from ccxt.base.precise import Precise
 
