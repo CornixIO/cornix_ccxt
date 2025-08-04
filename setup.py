@@ -5,6 +5,6 @@ setup(
     version='1.0.2',
     packages=find_packages(),
     install_requires=[
-        'ccxt @ https://github.com/CornixIO/ccxt/archive/refs/tags/4.0.106.95.tar.gz#subdirectory=python',
+        'ccxt==4.4.98',
     ],
 )
