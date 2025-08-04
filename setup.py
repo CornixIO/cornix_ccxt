@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='cornix_ccxt',
-    version='1.0.2',
+    version='1.0.3',
     packages=find_packages(),
     install_requires=[
         'ccxt==4.4.98',
