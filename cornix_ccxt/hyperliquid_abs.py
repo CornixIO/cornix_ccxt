@@ -18,12 +18,21 @@ class hyperliquid_abs(hyperliquid):
         })
 
     def parse_order_status(self, status: Str):
+        if status is None:
+            return None
         statuses: dict = {
-            'positionIncreaseAtOpenInterestCapRejected': 'rejected',
+            'triggered': 'open',
+            'filled': 'closed',
+            'open': 'open',
+            'canceled': 'canceled',
+            'rejected': 'rejected',
+            'marginCanceled': 'canceled',
         }
-        if parsed_status := statuses.get(status):
-            return parsed_status
-        return super().parse_order_status(status)
+        if status.endswith('Rejected'):
+            return 'rejected'
+        if status.endswith('Canceled'):
+            return 'canceled'
+        return self.safe_string(statuses, status, status)
 
     def parse_order(self, order: dict, market: Market = None) -> Order:
         order_dict = super().parse_order(order, market=market)
