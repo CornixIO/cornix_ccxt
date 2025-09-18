@@ -23,6 +23,30 @@ class binance_abs(binance):
         default_type = self.safe_string(self.options, 'defaultType')
         return default_type == 'future'
 
+    def extract_trading_permissions(self, permission_mapping, response=None, permissions_list=None):
+        assert response or permissions_list
+
+        permissions = list()
+        for trading_permission, required_permissions in permission_mapping.items():
+            has_permissions = True
+            for required_permission in required_permissions:
+                if response:
+                    value = self.safe_value(response, required_permission)
+                    if value:
+                        if isinstance(required_permissions, dict):
+                            expected_value = required_permissions[required_permission]
+                            if expected_value and isinstance(expected_value, list):
+                                has_permissions &= set(value) == set(expected_value)
+                            elif expected_value:
+                                has_permissions &= value == expected_value
+                    else:
+                        has_permissions = False
+                if permissions_list and required_permission not in permissions_list:
+                    has_permissions = False
+            if has_permissions:
+                permissions.append(trading_permission)
+        return permissions
+
     def get_api_account_details(self):
         response = self.sapi_get_account_apirestrictions()
         permissions = self.extract_trading_permissions(PERMISSION_TO_VALUE, response=response)
