@@ -17,23 +17,6 @@ class hyperliquid_abs(hyperliquid):
             }
         })
 
-    def parse_order_status(self, status: Str):
-        if status is None:
-            return None
-        statuses: dict = {
-            'triggered': 'open',
-            'filled': 'closed',
-            'open': 'open',
-            'canceled': 'canceled',
-            'rejected': 'rejected',
-            'marginCanceled': 'canceled',
-        }
-        if status.endswith('Rejected'):
-            return 'rejected'
-        if status.endswith('Canceled'):
-            return 'canceled'
-        return self.safe_string(statuses, status, status)
-
     def parse_order(self, order: dict, market: Market = None) -> Order:
         order_dict = super().parse_order(order, market=market)
         exchange_status = self.safe_string_2(order, 'status', 'ccxtStatus')
@@ -50,9 +33,14 @@ class hyperliquid_abs(hyperliquid):
             return symbol
 
     def coin_to_market_id(self, coin: Str):
-        market_id = super().coin_to_market_id(coin)
+        market_id = self.replace_symbol_k_with_1000(coin)
+        market_id = super().coin_to_market_id(market_id)
         market_id = market_id.split(':')[0]
-        return self.replace_symbol_k_with_1000(market_id)
+        return market_id
+
+    def safe_currency_code(self, currency_id, currency=None):
+        currency_id = self.replace_symbol_k_with_1000(currency_id)
+        return super().safe_currency_code(currency_id)
 
     def fetch_order_trades(self, id: str, symbol: Str = None, since: Int = None, limit: Int = None, params={}):
         symbol_trades = self.fetch_my_trades(symbol, since, limit, params=params)

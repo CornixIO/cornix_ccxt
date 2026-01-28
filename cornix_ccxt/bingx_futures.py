@@ -20,10 +20,22 @@ class bingx_futures(bingx_abs):
             symbol = market_obj['symbol']
             symbol = symbol.replace(':USDT', '').replace(':USDC', '')
             market_obj['symbol'] = symbol
-            market_obj['limits'].update(BINGX_LIMITS.get(symbol, {}))
+            limits = BINGX_LIMITS.get(symbol, {})
+            if not limits:
+                limits = BINGX_LIMITS.get(market_obj['id'].replace('-', '/'), {})
+            market_obj['limits'].update(limits)
         return market_obj
 
     def _swapV2PrivateGetTradeOrder(self, request):
         if 'clientOrderId' in request:
             request.pop('orderId', None)
         return super().swapV2PrivateGetTradeOrder(request)
+
+    def safe_balance(self, balance):
+        for coin, balance_dict in balance.items():
+            if coin == 'info':
+                continue
+            if not balance_dict['free'] and not balance_dict['used']:
+                balance_dict['free'] = 0.0
+                balance_dict['used'] = 0.0
+        return super().safe_balance(balance)

@@ -1,9 +1,9 @@
 from typing import Any
 
-from ccxt.base.errors import BadSymbol, ArgumentsRequired
-from ccxt.base.types import Market, MarketInterface, Str, Int
+from ccxt.base.decimal_to_precision import DECIMAL_PLACES, ROUND
+from ccxt.base.errors import ArgumentsRequired, BadRequest, BadSymbol
+from ccxt.base.types import Int, Market, MarketInterface, Str, Strings
 from ccxt.binance import binance
-from ccxt.base.decimal_to_precision import ROUND, DECIMAL_PLACES
 
 PERMISSION_TO_VALUE = {"spot": ["enableSpotAndMarginTrading"], "futures": ["enableFutures"],
                        "withdrawal": ["enableWithdrawals"]}
@@ -13,7 +13,20 @@ class binance_abs(binance):
     def describe(self) -> Any:
         return self.deep_extend(super(binance_abs, self).describe(), {
             'precisionMode': DECIMAL_PLACES,
+            'options': {'broker': {
+                'spot': 'x-MLHZG2J2',
+                'margin': 'x-MLHZG2J2',
+                'future': 'x-v69H3rG1',
+                'swap': 'x-v69H3rG1',
+                'delivery': 'x-sDPWvduU',
+                'option': 'x-sDPWvduU',
+                'inverse': 'x-sDPWvduU',
+            }}
         })
+
+    def get_broker_id(self):
+        broker = self.safe_dict(self.options, 'broker', {})
+        return self.safe_string(broker, self.options['defaultType'])
 
     def is_inverse(self, *args, **kwargs):
         default_type = self.safe_string(self.options, 'defaultType')
@@ -118,3 +131,40 @@ class binance_abs(binance):
             'orderId': id,
         }
         return self.fetch_my_trades(symbol, since, limit, self.extend(request, params))
+
+    def market_symbols(self, symbols: Strings = None, type: Str = None, allowEmpty=True, sameTypeOnly=False, sameSubTypeOnly=False):
+        if symbols is None:
+            if not allowEmpty:
+                raise ArgumentsRequired(self.id + ' empty list of symbols is not supported')
+            return symbols
+        symbolsLength = len(symbols)
+        if symbolsLength == 0:
+            if not allowEmpty:
+                raise ArgumentsRequired(self.id + ' empty list of symbols is not supported')
+            return symbols
+        result = []
+        marketType = None
+        isLinearSubType = None
+        for i in range(0, len(symbols)):
+            market = self.market(symbols[i])
+            if sameTypeOnly and (marketType is not None):
+                if market['type'] != marketType:
+                    raise BadRequest(self.id + ' symbols must be of the same type, either ' + marketType + ' or ' + market['type'] + '.')
+            if sameSubTypeOnly and (isLinearSubType is not None):
+                if market['linear'] != isLinearSubType:
+                    raise BadRequest(self.id + ' symbols must be of the same subType, either linear or inverse.')
+            if type is not None and market['type'] != type:
+                raise BadRequest(self.id + ' symbols must be of the same type ' + type + '. If the type is incorrect you can change it in options or the params of the request')
+            marketType = market['type']
+            if not market['spot']:
+                isLinearSubType = market['linear']
+            symbol = self.safe_string(market, 'symbol', symbols[i])
+            result.append(symbol)
+        return result
+
+    def get_market_from_symbols(self, symbols: Strings = None):
+        if symbols is None:
+            return None
+        firstMarket = self.safe_string(symbols, 0)
+        market = self.market(firstMarket)
+        return market
