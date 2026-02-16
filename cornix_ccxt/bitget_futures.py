@@ -1,6 +1,6 @@
-from cornix_ccxt.bitget_abs import bitget_abs
-
 from ccxt.base.types import Market
+
+from cornix_ccxt.bitget_abs import bitget_abs
 
 
 class bitget_futures(bitget_abs):

@@ -5,6 +5,6 @@ setup(
     version='1.0.11',
     packages=find_packages(),
     install_requires=[
-        'ccxt==4.4.98',
+        'ccxt==4.5.38',
     ],
 )
