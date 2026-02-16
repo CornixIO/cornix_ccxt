@@ -5,8 +5,10 @@ from ccxt.base.precise import Precise
 from ccxt.base.types import Market, Order, Str, Ticker
 from ccxt.blofin import blofin
 
+from cornix_ccxt.abstract.blofin import ImplicitAPI
 
-class blofin_abs(blofin):
+
+class blofin_abs(blofin, ImplicitAPI):
     def __init__(self, config={}):
         super().__init__(config)
         self.options['brokerId'] = '3c336d82b979ebd1'

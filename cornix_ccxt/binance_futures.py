@@ -5,8 +5,6 @@ from ccxt.base.types import Int, Str
 
 from cornix_ccxt.binance_futures_abs import binance_futures_abs
 
-BINANCE_FUTURES = 'Binance Futures'
-
 
 class binance_futures(binance_futures_abs):
     def describe(self) -> Any:
