@@ -1,8 +1,8 @@
 from typing import Any
 
-from cornix_ccxt.binance_futures_abs import binance_futures_abs
+from ccxt.base.errors import PermissionDenied
 
-BINANCE_COINS = 'Binance Coin-Futures'
+from cornix_ccxt.binance_futures_abs import binance_futures_abs
 
 
 class binance_inverse(binance_futures_abs):
@@ -13,4 +13,11 @@ class binance_inverse(binance_futures_abs):
                 'defaultType': 'delivery',
                 'defaultSubType': 'inverse',
             },
+            'exceptions': {
+                'inverse': {
+                    'exact': {
+                        '-4109': PermissionDenied,
+                    }
+                }
+            }
         })

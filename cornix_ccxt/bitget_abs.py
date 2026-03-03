@@ -1,6 +1,7 @@
 from typing import Any
 
 from ccxt import PermissionDenied
+
 from cornix_ccxt.bitget import bitget
 
 

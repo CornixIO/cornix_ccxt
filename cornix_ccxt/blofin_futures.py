@@ -1,5 +1,6 @@
 from ccxt.base.precise import Precise
 from ccxt.base.types import Num, OrderSide, OrderType
+
 from cornix_ccxt.blofin_abs import blofin_abs
 
 
